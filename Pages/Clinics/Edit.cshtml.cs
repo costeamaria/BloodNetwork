@@ -37,6 +37,7 @@ namespace BloodNetwork.Pages.Clinics
             }
             Clinic = clinic;
             ViewData["AdressID"] = new SelectList(_context.Set<Adress>(), "ID", "AdressName");
+            ViewData["CityID"] = new SelectList(_context.Set<City>(), "ID", "CityName");
             return Page();
         }
 
