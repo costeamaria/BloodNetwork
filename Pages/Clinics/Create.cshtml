@@ -19,6 +19,11 @@
                 <span asp-validation-for="Clinic.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Clinic.Quantity" class="control-label"></label>
+                <input asp-for="Clinic.Quantity" class="form-control" />
+                <span asp-validation-for="Clinic.Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Clinic.AdressID" class="control-label">Adress Name</label>
                 <select asp-for="Clinic.AdressID" class="form-control" asp-items="ViewBag.AdressID">
                 </select>
