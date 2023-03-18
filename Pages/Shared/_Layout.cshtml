@@ -11,6 +11,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+          <img src="d:\facultate\anul 2\anul 3\licență\bloodnetwork\imgs\blood.png" width="30" height="30"/>
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">BloodNetwork</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -23,7 +24,16 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/About us">Clinic address</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Eu donez">Eu donez</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Eu donez">Category</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Eu donez">Doctor</a>
                         </li>
                     </ul>
                 </div>
@@ -36,15 +46,59 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - BloodNetwork - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
+    <div class="container my-5">
+
+        <footer style="background-color: #F72F05;">
+            <div class="container p-4">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <h5 class="mb-3" style="letter-spacing: 2px; color: #F1F1F1;">Administration</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-1">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Member Administration">Members</a>
+                            </li>
+                            <li class="mb-1">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Doctors Administration">Administrator</a>
+                            </li>
+                            <li>
+                                <a href="https://www.google.com/maps?q=centrul+de+transfuzii+oradea&rlz=1C1KNTJ_enRO999RO1000&um=1&ie=UTF-8&sa=X&ved=2ahUKEwjPzIa2ueD9AhVngf0HHUmIBWIQ_AUoAnoECAEQBA" style="color: #F1F1F1;">Find Us On Map</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <h5 class="mb-1" style="letter-spacing: 2px; color: #F1F1F1;">Program</h5>
+                        <table class="table" style="color: #F1F1F1; border-color: #F1F1F1;">
+                            <tbody>
+                                <tr>
+                                    <td>L - V:</td>
+                                    <td>10am - 5pm</td>
+                                </tr>
+                                <tr>
+                                    <td>S - D:</td>
+                                    <td>11am - 14pm</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                      </div>
+
+                </div>
+            </div>
+            <div class="text-center p-3" style="background-color: white;">  
+                    &copy; 2023 - BloodNetwork - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            </div>
+        </footer>
+
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @if (IsSectionDefined("AddScript"))
+    {
+        @RenderSection("AddScript", required: false)
+    }
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
