@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BloodNetwork.Data;
 using BloodNetwork.Models;
 
-namespace BloodNetwork.Pages.Clinics
+namespace BloodNetwork.Pages.Doctors
 {
     public class CreateModel : PageModel
     {
@@ -21,25 +21,22 @@ namespace BloodNetwork.Pages.Clinics
 
         public IActionResult OnGet()
         {
-            ViewData["DoctorID"] = new SelectList(_context.Set<Doctor>(), "ID", "DoctorName");
-            ViewData["AdressID"] = new SelectList(_context.Set<Adress>(), "ID", "AdressName");
-            ViewData["CityID"] = new SelectList(_context.Set<City>(), "ID", "CityName");
             return Page();
         }
 
         [BindProperty]
-        public Clinic Clinic { get; set; } = default!;
+        public Doctor Doctor { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Clinic == null || Clinic == null)
+          if (!ModelState.IsValid || _context.Doctor == null || Doctor == null)
             {
                 return Page();
             }
 
-            _context.Clinic.Add(Clinic);
+            _context.Doctor.Add(Doctor);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

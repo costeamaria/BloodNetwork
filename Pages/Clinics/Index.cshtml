@@ -22,6 +22,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Clinic[0].Phone)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Clinic[0].Doctor.DoctorName)
+
+            </th>
             <th> @Html.DisplayNameFor(model => model.Clinic[0].Adress.AdressName) 
 
             </th>
@@ -44,6 +48,9 @@
             <td>
                     @Html.DisplayFor(modelItem => item.Phone)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Doctor)
+                </td>
             <td>
                     @Html.DisplayFor(modelItem => item.Adress.AdressName)
             </td>

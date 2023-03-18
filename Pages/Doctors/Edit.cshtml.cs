@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using BloodNetwork.Data;
 using BloodNetwork.Models;
 
-namespace BloodNetwork.Pages.Clinics
+namespace BloodNetwork.Pages.Doctors
 {
     public class EditModel : PageModel
     {
@@ -21,24 +21,21 @@ namespace BloodNetwork.Pages.Clinics
         }
 
         [BindProperty]
-        public Clinic Clinic { get; set; } = default!;
+        public Doctor Doctor { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Clinic == null)
+            if (id == null || _context.Doctor == null)
             {
                 return NotFound();
             }
 
-            var clinic =  await _context.Clinic.FirstOrDefaultAsync(m => m.ID == id);
-            if (clinic == null)
+            var doctor =  await _context.Doctor.FirstOrDefaultAsync(m => m.ID == id);
+            if (doctor == null)
             {
                 return NotFound();
             }
-            Clinic = clinic;
-            ViewData["DoctorID"] = new SelectList(_context.Set<Doctor>(), "ID", "DoctorName");
-            ViewData["AdressID"] = new SelectList(_context.Set<Adress>(), "ID", "AdressName");
-            ViewData["CityID"] = new SelectList(_context.Set<City>(), "ID", "CityName");
+            Doctor = doctor;
             return Page();
         }
 
@@ -51,7 +48,7 @@ namespace BloodNetwork.Pages.Clinics
                 return Page();
             }
 
-            _context.Attach(Clinic).State = EntityState.Modified;
+            _context.Attach(Doctor).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +56,7 @@ namespace BloodNetwork.Pages.Clinics
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClinicExists(Clinic.ID))
+                if (!DoctorExists(Doctor.ID))
                 {
                     return NotFound();
                 }
@@ -72,9 +69,9 @@ namespace BloodNetwork.Pages.Clinics
             return RedirectToPage("./Index");
         }
 
-        private bool ClinicExists(int id)
+        private bool DoctorExists(int id)
         {
-          return (_context.Clinic?.Any(e => e.ID == id)).GetValueOrDefault();
+          return (_context.Doctor?.Any(e => e.ID == id)).GetValueOrDefault();
         }
     }
 }

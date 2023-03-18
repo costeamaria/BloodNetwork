@@ -19,5 +19,7 @@ namespace BloodNetwork.Data
         public DbSet<BloodNetwork.Models.Adress>? Adress { get; set; }
 
         public DbSet<BloodNetwork.Models.City>? City { get; set; }
+
+        public DbSet<BloodNetwork.Models.Doctor>? Doctor { get; set; }
     }
 }

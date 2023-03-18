@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
+using System.Security.Policy;
 
 namespace BloodNetwork.Models
 {
@@ -16,5 +17,7 @@ namespace BloodNetwork.Models
         public Adress? Adress { get; set; }
         public int? CityID { get; set; }
         public City? City { get; set; }
+        public int? DoctorID { get; set; }
+        public Doctor? Doctor { get; set; }
     }
 }

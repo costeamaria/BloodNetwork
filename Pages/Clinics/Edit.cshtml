@@ -30,6 +30,12 @@
                 <span asp-validation-for="Clinic.Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Clinic.DoctorID" class="control-label">Doctor Name</label>
+                <select asp-for="Clinic.DoctorID" class="form-control" asp-items="ViewBag.DoctorID">
+                </select>
+                <span asp-validation-for="Clinic.AdressID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Clinic.AdressID" class="control-label">Adress Name</label>
                 <select asp-for="Clinic.AdressID" class="form-control" asp-items="ViewBag.AdressID">
                 </select>
