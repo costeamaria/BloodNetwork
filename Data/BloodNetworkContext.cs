@@ -17,5 +17,7 @@ namespace BloodNetwork.Data
         public DbSet<BloodNetwork.Models.Clinic> Clinic { get; set; } = default!;
 
         public DbSet<BloodNetwork.Models.Adress>? Adress { get; set; }
+
+        public DbSet<BloodNetwork.Models.City>? City { get; set; }
     }
 }
