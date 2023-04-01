@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BloodNetwork.Data;
 using BloodNetwork.Models;
 
-namespace BloodNetwork.Pages.Cities
+namespace BloodNetwork.Pages.Categories
 {
     public class CreateModel : PageModel
     {
@@ -25,18 +25,18 @@ namespace BloodNetwork.Pages.Cities
         }
 
         [BindProperty]
-        public City City { get; set; } = default!;
+        public Category Category { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.City == null || City == null)
+          if (!ModelState.IsValid || _context.Category == null || Category == null)
             {
                 return Page();
             }
 
-            _context.City.Add(City);
+            _context.Category.Add(Category);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

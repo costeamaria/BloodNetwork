@@ -29,10 +29,6 @@
             <th> @Html.DisplayNameFor(model => model.Clinic[0].Adress.AdressName) 
 
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Clinic[0].City.CityName)
-
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -54,9 +50,6 @@
             <td>
                     @Html.DisplayFor(modelItem => item.Adress.AdressName)
             </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.City.CityName)
-                </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |

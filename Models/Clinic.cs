@@ -15,9 +15,8 @@ namespace BloodNetwork.Models
         public decimal Phone { get; set; }
         public int? AdressID { get; set; }
         public Adress? Adress { get; set; }
-        public int? CityID { get; set; }
-        public City? City { get; set; }
         public int? DoctorID { get; set; }
         public Doctor? Doctor { get; set; }
+        public ICollection<ClinicCategory>? ClinicCategories { get; set; }
     }
 }

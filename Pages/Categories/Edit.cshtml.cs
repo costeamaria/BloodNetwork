@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using BloodNetwork.Data;
 using BloodNetwork.Models;
 
-namespace BloodNetwork.Pages.Cities
+namespace BloodNetwork.Pages.Categories
 {
     public class EditModel : PageModel
     {
@@ -21,21 +21,21 @@ namespace BloodNetwork.Pages.Cities
         }
 
         [BindProperty]
-        public City City { get; set; } = default!;
+        public Category Category { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.City == null)
+            if (id == null || _context.Category == null)
             {
                 return NotFound();
             }
 
-            var city =  await _context.City.FirstOrDefaultAsync(m => m.ID == id);
-            if (city == null)
+            var category =  await _context.Category.FirstOrDefaultAsync(m => m.ID == id);
+            if (category == null)
             {
                 return NotFound();
             }
-            City = city;
+            Category = category;
             return Page();
         }
 
@@ -48,7 +48,7 @@ namespace BloodNetwork.Pages.Cities
                 return Page();
             }
 
-            _context.Attach(City).State = EntityState.Modified;
+            _context.Attach(Category).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +56,7 @@ namespace BloodNetwork.Pages.Cities
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CityExists(City.ID))
+                if (!CategoryExists(Category.ID))
                 {
                     return NotFound();
                 }
@@ -69,9 +69,9 @@ namespace BloodNetwork.Pages.Cities
             return RedirectToPage("./Index");
         }
 
-        private bool CityExists(int id)
+        private bool CategoryExists(int id)
         {
-          return (_context.City?.Any(e => e.ID == id)).GetValueOrDefault();
+          return (_context.Category?.Any(e => e.ID == id)).GetValueOrDefault();
         }
     }
 }

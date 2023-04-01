@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BloodNetwork.Data;
 using BloodNetwork.Models;
 
-namespace BloodNetwork.Pages.Cities
+namespace BloodNetwork.Pages.Categories
 {
     public class DeleteModel : PageModel
     {
@@ -20,40 +20,40 @@ namespace BloodNetwork.Pages.Cities
         }
 
         [BindProperty]
-      public City City { get; set; } = default!;
+      public Category Category { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.City == null)
+            if (id == null || _context.Category == null)
             {
                 return NotFound();
             }
 
-            var city = await _context.City.FirstOrDefaultAsync(m => m.ID == id);
+            var category = await _context.Category.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (city == null)
+            if (category == null)
             {
                 return NotFound();
             }
             else 
             {
-                City = city;
+                Category = category;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.City == null)
+            if (id == null || _context.Category == null)
             {
                 return NotFound();
             }
-            var city = await _context.City.FindAsync(id);
+            var category = await _context.Category.FindAsync(id);
 
-            if (city != null)
+            if (category != null)
             {
-                City = city;
-                _context.City.Remove(City);
+                Category = category;
+                _context.Category.Remove(Category);
                 await _context.SaveChangesAsync();
             }
 

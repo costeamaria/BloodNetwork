@@ -27,7 +27,6 @@ namespace BloodNetwork.Pages.Clinics
             {
                 Clinic = await _context.Clinic
                     .Include(c => c.Adress)
-                    .Include(c => c.City)
                     .ToListAsync();
             }
         }

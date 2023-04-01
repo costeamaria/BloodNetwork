@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BloodNetwork.Data;
 using BloodNetwork.Models;
 
-namespace BloodNetwork.Pages.Cities
+namespace BloodNetwork.Pages.Categories
 {
     public class IndexModel : PageModel
     {
@@ -19,13 +19,13 @@ namespace BloodNetwork.Pages.Cities
             _context = context;
         }
 
-        public IList<City> City { get;set; } = default!;
+        public IList<Category> Category { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.City != null)
+            if (_context.Category != null)
             {
-                City = await _context.City.ToListAsync();
+                Category = await _context.Category.ToListAsync();
             }
         }
     }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BloodNetwork.Data;
 using BloodNetwork.Models;
 
-namespace BloodNetwork.Pages.Cities
+namespace BloodNetwork.Pages.Categories
 {
     public class DetailsModel : PageModel
     {
@@ -19,23 +19,23 @@ namespace BloodNetwork.Pages.Cities
             _context = context;
         }
 
-      public City City { get; set; } = default!; 
+      public Category Category { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.City == null)
+            if (id == null || _context.Category == null)
             {
                 return NotFound();
             }
 
-            var city = await _context.City.FirstOrDefaultAsync(m => m.ID == id);
-            if (city == null)
+            var category = await _context.Category.FirstOrDefaultAsync(m => m.ID == id);
+            if (category == null)
             {
                 return NotFound();
             }
             else 
             {
-                City = city;
+                Category = category;
             }
             return Page();
         }
