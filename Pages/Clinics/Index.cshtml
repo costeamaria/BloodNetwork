@@ -1,4 +1,4 @@
-﻿@page
+﻿@page 
 @model BloodNetwork.Pages.Clinics.IndexModel
 
 @{
@@ -29,11 +29,15 @@
             <th> @Html.DisplayNameFor(model => model.Clinic[0].Adress.AdressName) 
 
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Clinic[0].ClinicCategories)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Clinic) {
+        @foreach (var item in Model.ClinicD.Clinics)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -45,11 +49,19 @@
                     @Html.DisplayFor(modelItem => item.Phone)
             </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Doctor)
+                    @Html.DisplayFor(modelItem => item.Doctor.DoctorName)
                 </td>
             <td>
                     @Html.DisplayFor(modelItem => item.Adress.AdressName)
             </td>
+                <td>
+                    @{
+                        foreach (var category in item.ClinicCategories)
+                                {
+                            @category.Category.ID @: @category.Category.CategoryName <br />
+                        }
+                    }
+                </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |

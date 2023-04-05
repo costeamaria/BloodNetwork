@@ -39,32 +39,6 @@ namespace BloodNetwork.Migrations
                     b.ToTable("Adress");
                 });
 
-            modelBuilder.Entity("BloodNetwork.Models.BloodCategory", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int>("BloodID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClinicID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("BloodID");
-
-                    b.HasIndex("CategoryID");
-
-                    b.ToTable("BloodCategory");
-                });
-
             modelBuilder.Entity("BloodNetwork.Models.Category", b =>
                 {
                     b.Property<int>("ID")
@@ -82,23 +56,6 @@ namespace BloodNetwork.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("BloodNetwork.Models.City", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<string>("CityName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("City");
-                });
-
             modelBuilder.Entity("BloodNetwork.Models.Clinic", b =>
                 {
                     b.Property<int>("ID")
@@ -108,9 +65,6 @@ namespace BloodNetwork.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<int?>("AdressID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CityID")
                         .HasColumnType("int");
 
                     b.Property<int?>("DoctorID")
@@ -130,11 +84,32 @@ namespace BloodNetwork.Migrations
 
                     b.HasIndex("AdressID");
 
-                    b.HasIndex("CityID");
-
                     b.HasIndex("DoctorID");
 
                     b.ToTable("Clinic");
+                });
+
+            modelBuilder.Entity("BloodNetwork.Models.ClinicCategory", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClinicID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CategoryID");
+
+                    b.HasIndex("ClinicID");
+
+                    b.ToTable("ClinicCategory");
                 });
 
             modelBuilder.Entity("BloodNetwork.Models.Doctor", b =>
@@ -154,34 +129,11 @@ namespace BloodNetwork.Migrations
                     b.ToTable("Doctor");
                 });
 
-            modelBuilder.Entity("BloodNetwork.Models.BloodCategory", b =>
-                {
-                    b.HasOne("BloodNetwork.Models.Clinic", "Blood")
-                        .WithMany("BloodCategories")
-                        .HasForeignKey("BloodID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BloodNetwork.Models.Category", "Category")
-                        .WithMany("BloodCategories")
-                        .HasForeignKey("CategoryID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Blood");
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("BloodNetwork.Models.Clinic", b =>
                 {
                     b.HasOne("BloodNetwork.Models.Adress", "Adress")
                         .WithMany("Clinics")
                         .HasForeignKey("AdressID");
-
-                    b.HasOne("BloodNetwork.Models.City", "City")
-                        .WithMany("Clinics")
-                        .HasForeignKey("CityID");
 
                     b.HasOne("BloodNetwork.Models.Doctor", "Doctor")
                         .WithMany("Clinics")
@@ -189,9 +141,26 @@ namespace BloodNetwork.Migrations
 
                     b.Navigation("Adress");
 
-                    b.Navigation("City");
-
                     b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("BloodNetwork.Models.ClinicCategory", b =>
+                {
+                    b.HasOne("BloodNetwork.Models.Category", "Category")
+                        .WithMany("ClinicCategories")
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BloodNetwork.Models.Clinic", "Clinic")
+                        .WithMany("ClinicCategories")
+                        .HasForeignKey("ClinicID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Clinic");
                 });
 
             modelBuilder.Entity("BloodNetwork.Models.Adress", b =>
@@ -201,17 +170,12 @@ namespace BloodNetwork.Migrations
 
             modelBuilder.Entity("BloodNetwork.Models.Category", b =>
                 {
-                    b.Navigation("BloodCategories");
-                });
-
-            modelBuilder.Entity("BloodNetwork.Models.City", b =>
-                {
-                    b.Navigation("Clinics");
+                    b.Navigation("ClinicCategories");
                 });
 
             modelBuilder.Entity("BloodNetwork.Models.Clinic", b =>
                 {
-                    b.Navigation("BloodCategories");
+                    b.Navigation("ClinicCategories");
                 });
 
             modelBuilder.Entity("BloodNetwork.Models.Doctor", b =>

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BloodNetwork.Data;
 using BloodNetwork.Models;
+using Microsoft.CodeAnalysis;
 
 namespace BloodNetwork.Pages.Clinics
 {
@@ -19,15 +20,29 @@ namespace BloodNetwork.Pages.Clinics
             _context = context;
         }
 
-        public IList<Clinic> Clinic { get;set; } = default!;
+        public IList<Clinic> Clinic { get; set; } = default!;
+        public ClinicData ClinicD { get; set; }
+        public int ClinicID { get; set; }
+        public int CategoryID { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int? id, int? categoryID)
         {
-            if (_context.Clinic != null)
+            ClinicD = new ClinicData();
+
+            ClinicD.Clinics = await _context.Clinic
+            .Include(c => c.Adress)
+            .Include(c => c.Doctor)
+            .Include(c => c.ClinicCategories)
+            .ThenInclude(c => c.Category)
+            .AsNoTracking()
+            .OrderBy(c => c.Name)
+            .ToListAsync();
+            if (id != null)
             {
-                Clinic = await _context.Clinic
-                    .Include(c => c.Adress)
-                    .ToListAsync();
+                ClinicID = id.Value;
+                Clinic clinic = ClinicD.Clinics
+                .Where(i => i.ID == id.Value).Single();
+                ClinicD.Categories = clinic.ClinicCategories.Select(s => s.Category);
             }
         }
     }

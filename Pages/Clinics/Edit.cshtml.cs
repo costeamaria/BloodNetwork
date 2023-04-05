@@ -11,7 +11,7 @@ using BloodNetwork.Models;
 
 namespace BloodNetwork.Pages.Clinics
 {
-    public class EditModel : PageModel
+    public class EditModel : ClinicCategoriesPageModel
     {
         private readonly BloodNetwork.Data.BloodNetworkContext _context;
 
@@ -21,7 +21,7 @@ namespace BloodNetwork.Pages.Clinics
         }
 
         [BindProperty]
-        public Clinic Clinic { get; set; } = default!;
+        public Clinic Clinic { get; set; } 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -43,37 +43,37 @@ namespace BloodNetwork.Pages.Clinics
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id, string[] selectedCategories)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            _context.Attach(Clinic).State = EntityState.Modified;
-
-            try
+            var clinicToUpdate = await _context.Clinic
+            .Include(i => i.Adress)
+            .Include(i => i.Doctor)
+            .Include(i => i.ClinicCategories)
+            .ThenInclude(i => i.Category)
+            .FirstOrDefaultAsync(s => s.ID == id);
+            if (clinicToUpdate == null)
             {
+                return NotFound();
+            }
+
+            if (await TryUpdateModelAsync<Clinic>(clinicToUpdate, "Clinic",
+             i => i.Name, i => i.Quantity,
+             i => i.Phone, i => i.AdressID, i => i.DoctorID))
+            {
+                UpdateClinicCategories(_context, selectedCategories, clinicToUpdate);
                 await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClinicExists(Clinic.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool ClinicExists(int id)
-        {
-          return (_context.Clinic?.Any(e => e.ID == id)).GetValueOrDefault();
+            //Apelam UpdateBookCategories pentru a aplica informatiile din checkboxuri la entitatea Clinics care
+            //este editata
+            UpdateClinicCategories(_context, selectedCategories, clinicToUpdate);
+            PopulateAssignedCategoryData(_context, clinicToUpdate);
+            return Page();
         }
     }
 }
