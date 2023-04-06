@@ -51,7 +51,7 @@ namespace BloodNetwork.Models
                 {
                     if (clinicCategories.Contains(cat.ID))
                     {
-                        ClinicCategory courseToRemove
+                       ClinicCategory courseToRemove
                         = clinicToUpdate
                         .ClinicCategories
                         .SingleOrDefault(i => i.CategoryID == cat.ID);
@@ -62,5 +62,4 @@ namespace BloodNetwork.Models
         }
     }
 }
-
 

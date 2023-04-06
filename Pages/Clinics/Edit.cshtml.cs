@@ -8,6 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BloodNetwork.Data;
 using BloodNetwork.Models;
+using BloodNetwork.Migrations;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
+using Adress = BloodNetwork.Models.Adress;
+using Doctor = BloodNetwork.Models.Doctor;
 
 namespace BloodNetwork.Pages.Clinics
 {
@@ -21,7 +26,7 @@ namespace BloodNetwork.Pages.Clinics
         }
 
         [BindProperty]
-        public Clinic Clinic { get; set; } 
+        public Clinic Clinic { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,14 +35,22 @@ namespace BloodNetwork.Pages.Clinics
                 return NotFound();
             }
 
-            var clinic =  await _context.Clinic.FirstOrDefaultAsync(m => m.ID == id);
+            Clinic = await _context.Clinic
+                 .Include(c => c.Adress)
+                 .Include(c => c.ClinicCategories).ThenInclude(p => p.Category)
+                 .AsNoTracking()
+                 .FirstOrDefaultAsync(m => m.ID == id);
+
+            var clinic = await _context.Clinic.FirstOrDefaultAsync(m => m.ID == id);
             if (clinic == null)
             {
                 return NotFound();
             }
+            PopulateAssignedCategoryData(_context, Clinic);
             Clinic = clinic;
-            ViewData["DoctorID"] = new SelectList(_context.Set<Doctor>(), "ID", "DoctorName");
             ViewData["AdressID"] = new SelectList(_context.Set<Adress>(), "ID", "AdressName");
+            ViewData["DoctorID"] = new SelectList(_context.Set<Doctor>(), "ID", "DoctorName");
+          
             return Page();
         }
 
@@ -52,7 +65,6 @@ namespace BloodNetwork.Pages.Clinics
 
             var clinicToUpdate = await _context.Clinic
             .Include(i => i.Adress)
-            .Include(i => i.Doctor)
             .Include(i => i.ClinicCategories)
             .ThenInclude(i => i.Category)
             .FirstOrDefaultAsync(s => s.ID == id);
