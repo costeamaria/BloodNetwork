@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BloodNetwork.Data;
 using BloodNetwork.Models;
+using BloodNetwork.Models.ViewModels;
 
 namespace BloodNetwork.Pages.Adresses
 {
@@ -19,13 +20,25 @@ namespace BloodNetwork.Pages.Adresses
             _context = context;
         }
 
-        public IList<Adress> Adress { get;set; } = default!;
+        public IList<Adress> Adress { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public AdressIndexData AdressData { get; set; }
+        public int AdressID { get; set; }
+        public int ClinicID { get; set; }
+
+        public async Task OnGetAsync(int? id, int? clinicID)
         {
-            if (_context.Adress != null)
+            AdressData = new AdressIndexData();
+            AdressData.Adresses = await _context.Adress
+            .Include(i => i.Clinics)
+            .OrderBy(i => i.AdressName)
+            .ToListAsync();
+            if (id != null)
             {
-                Adress = await _context.Adress.ToListAsync();
+                AdressID = id.Value;
+                Adress adress = AdressData.Adresses
+                .Where(i => i.ID == id.Value).Single();
+                AdressData.Clinics = adress.Clinics;
             }
         }
     }

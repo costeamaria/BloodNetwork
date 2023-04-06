@@ -20,17 +20,55 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Adress) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AdressName)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.AdressData.Adresses)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.AdressID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdressName)
+                </td>
+                <td>
+                    <a asp-page="./Index" asp-route-id="@item.ID">Select</a> |
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@if (Model.AdressData.Adresses != null)
+{
+    <h3>Clinics by Selected Adress</h3>
+    <table class="table">
+
+        @foreach (var item in Model.AdressData.Adresses)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.AdressID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+
+                <td>
+                    @{
+                        foreach (var c in item.Clinics)
+                        {
+
+                            @c.Name 
+
+                            <br />
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+

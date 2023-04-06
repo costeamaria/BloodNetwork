@@ -24,10 +24,12 @@ namespace BloodNetwork.Pages.Clinics
         public ClinicData ClinicD { get; set; }
         public int ClinicID { get; set; }
         public int CategoryID { get; set; }
+        public string CurrentFilter { get; set; }
 
-        public async Task OnGetAsync(int? id, int? categoryID)
+        public async Task OnGetAsync(int? id, int? categoryID, string searchString)
         {
             ClinicD = new ClinicData();
+            CurrentFilter = searchString;
 
             ClinicD.Clinics = await _context.Clinic
             .Include(c => c.Adress)
@@ -37,12 +39,17 @@ namespace BloodNetwork.Pages.Clinics
             .AsNoTracking()
             .OrderBy(c => c.Name)
             .ToListAsync();
-            if (id != null)
+            if (!String.IsNullOrEmpty(searchString))
             {
-                ClinicID = id.Value;
-                Clinic clinic = ClinicD.Clinics
-                .Where(i => i.ID == id.Value).Single();
-                ClinicD.Categories = clinic.ClinicCategories.Select(s => s.Category);
+                ClinicD.Clinics = ClinicD.Clinics.Where(s => s.Doctor.DoctorName.Contains(searchString)
+ || s.Adress.AdressName.Contains(searchString));
+                if (id != null)
+                {
+                    ClinicID = id.Value;
+                    Clinic clinic = ClinicD.Clinics
+                    .Where(i => i.ID == id.Value).Single();
+                    ClinicD.Categories = clinic.ClinicCategories.Select(s => s.Category);
+                }
             }
         }
     }
