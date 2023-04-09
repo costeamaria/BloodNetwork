@@ -21,5 +21,9 @@ namespace BloodNetwork.Data
         public DbSet<BloodNetwork.Models.Doctor>? Doctor { get; set; }
 
         public DbSet<BloodNetwork.Models.Category>? Category { get; set; }
+
+        public DbSet<BloodNetwork.Models.Member>? Member { get; set; }
+
+        public DbSet<BloodNetwork.Models.Appointment>? Appointment { get; set; }
     }
 }
