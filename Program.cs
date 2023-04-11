@@ -1,12 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using BloodNetwork.Data;
+using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
 builder.Services.AddDbContext<BloodNetworkContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BloodNetworkContext") ?? throw new InvalidOperationException("Connection string 'BloodNetworkContext' not found.")));
+
+builder.Services.AddDbContext<ClinicIdentityContext>(options =>
+
+options.UseSqlServer(builder.Configuration.GetConnectionString("BloodNetworkContext") ?? throw new InvalidOperationException("Connection string 'BloodNetworkContext' not found.")));
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+options.SignIn.RequireConfirmedAccount = true)
+ .AddRoles<IdentityRole>()
+ .AddEntityFrameworkStores<ClinicIdentityContext>();
 
 var app = builder.Build();
 
@@ -22,6 +30,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 
