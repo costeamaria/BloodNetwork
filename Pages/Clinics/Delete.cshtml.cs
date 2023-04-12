@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BloodNetwork.Data;
 using BloodNetwork.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace BloodNetwork.Pages.Clinics
 {
+    [Authorize(Roles = "Admin")]
     public class DeleteModel : PageModel
     {
         private readonly BloodNetwork.Data.BloodNetworkContext _context;

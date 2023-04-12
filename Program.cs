@@ -4,7 +4,22 @@ using BloodNetwork.Data;
 using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+   policy.RequireRole("Admin"));
+});
+
 // Add services to the container.
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeFolder("/Clinics");
+    options.Conventions.AllowAnonymousToPage("/Clinics/Index");
+    options.Conventions.AllowAnonymousToPage("/Clinics/Details");
+    options.Conventions.AuthorizeFolder("/Members", "AdminPolicy");
+
+});
+
 builder.Services.AddDbContext<BloodNetworkContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BloodNetworkContext") ?? throw new InvalidOperationException("Connection string 'BloodNetworkContext' not found.")));
 

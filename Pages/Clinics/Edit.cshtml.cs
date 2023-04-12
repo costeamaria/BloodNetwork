@@ -16,6 +16,7 @@ using Doctor = BloodNetwork.Models.Doctor;
 
 namespace BloodNetwork.Pages.Clinics
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : ClinicCategoriesPageModel
     {
         private readonly BloodNetwork.Data.BloodNetworkContext _context;
