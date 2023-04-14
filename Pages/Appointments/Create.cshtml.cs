@@ -26,10 +26,17 @@ namespace BloodNetwork.Pages.Appointments
                 .Select(x => new
                 {
                     x.ID,
-                    ClinicFullName = x.Name + ", doctor: " + x.Doctor.DoctorName + " "
+                    ClinicFullName = x.Name + ", doctor: " + x.Doctor.DoctorName + " " 
+                });
+           
+            var memberList = _context.Member
+                .Select(y => new
+                {
+                    y.ID,
+                    MemberFullName = " Email: " + y.Email + " "
                 });
 
-            ViewData["MemberID"] = new SelectList(_context.Member, "ID", "FullName");
+            ViewData["MemberID"] = new SelectList(memberList, "ID", "MemberFullName");
             ViewData["ClinicID"] = new SelectList(clinicList, "ID", "ClinicFullName");
 
             return Page();

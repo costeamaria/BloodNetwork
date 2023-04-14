@@ -5,10 +5,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Adress</h1>
+<h1>Adresa clinicilor</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Adaugă o nouă locație</a>
 </p>
 <table class="table">
     <thead>
@@ -43,7 +43,7 @@
 </table>
 @if (Model.AdressData.Adresses != null)
 {
-    <h3>Clinics by Selected Adress</h3>
+    <h3>Clinici după adresa selectată</h3>
     <table class="table">
 
         @foreach (var item in Model.AdressData.Adresses)

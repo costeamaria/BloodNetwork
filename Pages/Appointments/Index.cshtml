@@ -5,10 +5,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Programări</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Fă o programare:</a>
 </p>
 <table class="table">
     <thead>
@@ -17,10 +17,19 @@
                 @Html.DisplayNameFor(model => model.Appointment[0].Member)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].Member.Email)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Appointment[0].Clinic)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Appointment[0].AppointmentDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].AppointmentTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].Clinic.Doctor)
             </th>
             <th></th>
         </tr>
@@ -31,11 +40,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Member.FullName)
             </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.Member.Email)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Clinic.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AppointmentDate)
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentTime)
+            </td>
             </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Clinic.Doctor.DoctorName)

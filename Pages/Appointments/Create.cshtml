@@ -5,9 +5,8 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Programează-te</h1>
 
-<h4>Appointment</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,7 +14,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Appointment.MemberID" class="control-label"></label>
-                <select asp-for="Appointment.MemberID" class ="form-control" asp-items="ViewBag.MemberID"></select>
+                <select asp-for="Appointment.MemberID" class="form-control" asp-items="ViewBag.MemberID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Appointment.Member" class="control-label"></label>
+                <input asp-for="Appointment.Member" class="form-control" />
+                <span asp-validation-for="Appointment.Member" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Appointment.ClinicID" class="control-label"></label>
@@ -27,6 +31,11 @@
                 <span asp-validation-for="Appointment.AppointmentDate" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Appointment.AppointmentTime" class="control-label"></label>
+                <input asp-for="Appointment.AppointmentTime" class="form-control" />
+                <span asp-validation-for="Appointment.AppointmentTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -34,7 +43,7 @@
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="Index">Înapoi la listă</a>
 </div>
 
 @section Scripts {

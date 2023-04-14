@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BloodNetwork.Migrations
 {
     [DbContext(typeof(BloodNetworkContext))]
-    [Migration("20230409152344_Appointments")]
-    partial class Appointments
+    [Migration("20230412163606_Appointment")]
+    partial class Appointment
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,35 @@ namespace BloodNetwork.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Adress");
+                });
+
+            modelBuilder.Entity("BloodNetwork.Models.Appointment", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<DateTime>("AppointmentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("AppointmentTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ClinicID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MemberID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ClinicID");
+
+                    b.HasIndex("MemberID");
+
+                    b.ToTable("Appointment");
                 });
 
             modelBuilder.Entity("BloodNetwork.Models.Category", b =>
@@ -131,6 +160,53 @@ namespace BloodNetwork.Migrations
                     b.ToTable("Doctor");
                 });
 
+            modelBuilder.Entity("BloodNetwork.Models.Member", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("Adress")
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Member");
+                });
+
+            modelBuilder.Entity("BloodNetwork.Models.Appointment", b =>
+                {
+                    b.HasOne("BloodNetwork.Models.Clinic", "Clinic")
+                        .WithMany()
+                        .HasForeignKey("ClinicID");
+
+                    b.HasOne("BloodNetwork.Models.Member", "Member")
+                        .WithMany("Appointments")
+                        .HasForeignKey("MemberID");
+
+                    b.Navigation("Clinic");
+
+                    b.Navigation("Member");
+                });
+
             modelBuilder.Entity("BloodNetwork.Models.Clinic", b =>
                 {
                     b.HasOne("BloodNetwork.Models.Adress", "Adress")
@@ -183,6 +259,11 @@ namespace BloodNetwork.Migrations
             modelBuilder.Entity("BloodNetwork.Models.Doctor", b =>
                 {
                     b.Navigation("Clinics");
+                });
+
+            modelBuilder.Entity("BloodNetwork.Models.Member", b =>
+                {
+                    b.Navigation("Appointments");
                 });
 #pragma warning restore 612, 618
         }

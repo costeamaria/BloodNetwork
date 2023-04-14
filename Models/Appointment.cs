@@ -9,7 +9,9 @@ namespace BloodNetwork.Models
         public Member? Member { get; set; }
         public int? ClinicID { get; set; }
         public Clinic? Clinic { get; set; }
-        
+        [DataType(DataType.Time)]
+        public DateTime AppointmentTime { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime AppointmentDate { get; set; }
     }

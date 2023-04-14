@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using BloodNetwork.Data;
+using Microsoft.AspNetCore.Session;
 using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,9 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/Clinics");
+    options.Conventions.AuthorizeFolder("/Appointments");
+    options.Conventions.AllowAnonymousToPage("/Appointments/Index");
+    options.Conventions.AllowAnonymousToPage("/Appointments/Details");
     options.Conventions.AllowAnonymousToPage("/Clinics/Index");
     options.Conventions.AllowAnonymousToPage("/Clinics/Details");
     options.Conventions.AuthorizeFolder("/Members", "AdminPolicy");
@@ -31,7 +35,13 @@ options.SignIn.RequireConfirmedAccount = true)
  .AddRoles<IdentityRole>()
  .AddEntityFrameworkStores<ClinicIdentityContext>();
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(2);
+});
 var app = builder.Build();
+app.UseSession();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

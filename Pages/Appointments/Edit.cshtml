@@ -5,9 +5,9 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Modifică</h1>
 
-<h4>Appointment</h4>
+<h4>Programări</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -32,12 +32,17 @@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+            <div class="form-group">
+                <label asp-for="Appointment.AppointmentTime" class="control-label"></label>
+                <input asp-for="Appointment.AppointmentTime" class="form-control" />
+                <span asp-validation-for="Appointment.AppointmentTime" class="text-danger"></span>
+            </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Index">Înapoi la listă</a>
 </div>
 
 @section Scripts {

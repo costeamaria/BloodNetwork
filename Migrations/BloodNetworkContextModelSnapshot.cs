@@ -50,6 +50,9 @@ namespace BloodNetwork.Migrations
                     b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("AppointmentTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("ClinicID")
                         .HasColumnType("int");
 
