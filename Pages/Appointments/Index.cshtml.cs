@@ -31,5 +31,6 @@ namespace BloodNetwork.Pages.Appointments
                 .Include(c => c.Member).ToListAsync();
             }
         }
+       
     }
 }

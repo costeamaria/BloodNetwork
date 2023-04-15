@@ -13,10 +13,21 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="card-body">
+                <input type="file" class="form-control" onchange="DisplayImage(event)" />
+                <div class="mt-md-3 text-center">
+                    <label class="control-label text-center" for="picture">Alege poză</label>
+                </div>
+            </div>
             <div class="form-group">
                 <label asp-for="Doctor.DoctorName" class="control-label"></label>
                 <input asp-for="Doctor.DoctorName" class="form-control" />
                 <span asp-validation-for="Doctor.DoctorName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Doctor.Number" class="control-label"></label>
+                <input asp-for="Doctor.Number" class="form-control" />
+                <span asp-validation-for="Doctor.Number" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -26,9 +37,21 @@
 </div>
 
 <div>
-    <a asp-page="Index">Înapoi la listăt</a>
+    <a asp-page="Index">Înapoi la listă</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script type="text/javascript">
+        function DisplayImage(event)
+        {
+            console.log(event)
+            let image = document.getElementById("image1");
+            image.src = URL.createObjectURL(event.target.files[0])
+        }
+    
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

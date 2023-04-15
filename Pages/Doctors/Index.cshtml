@@ -16,6 +16,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Doctor[0].DoctorName)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Doctor[0].Number)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -29,7 +32,11 @@
             }
             <tr class="@selectedRow">
                 <td>
+                    <img src="~/imgs/user-128.png" width="50" height="50" alt="picture" />
                     @Html.DisplayFor(modelItem => item.DoctorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
                 </td>
                 <td>
                     <a asp-page="./Index" asp-route-id="@item.ID">Select</a> |

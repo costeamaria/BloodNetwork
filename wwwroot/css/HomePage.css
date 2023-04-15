@@ -1,5 +1,5 @@
 ﻿body {
-    background-color: #F79191;
+    background-color: azure;
     color: #F72F05;
     font: normal 15px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
 }
@@ -35,6 +35,10 @@ html {
 header {
     height: 120px;
     color: #E9D2D2;
+}
+
+th {
+    color: #F72F05;
 }
 
 

@@ -19,6 +19,11 @@
                 <span asp-validation-for="Doctor.DoctorName" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Doctor.Number" class="control-label"></label>
+                <input asp-for="Doctor.Number" class="form-control" />
+                <span asp-validation-for="Doctor.Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>

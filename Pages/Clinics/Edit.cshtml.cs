@@ -76,7 +76,7 @@ namespace BloodNetwork.Pages.Clinics
 
             if (await TryUpdateModelAsync<Clinic>(clinicToUpdate, "Clinic",
              i => i.Name, i => i.Quantity,
-             i => i.Phone, i => i.AdressID, i => i.DoctorID))
+             i => i.AdressID, i => i.DoctorID))
             {
                 UpdateClinicCategories(_context, selectedCategories, clinicToUpdate);
                 await _context.SaveChangesAsync();
