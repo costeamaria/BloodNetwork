@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using BloodNetwork.Areas.Identity.Pages.Account.Manage;
 
 namespace BloodNetwork.Areas.Identity.Pages.Account
 {
@@ -97,6 +98,8 @@ namespace BloodNetwork.Areas.Identity.Pages.Account
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            
+
 
             ReturnUrl = returnUrl;
         }

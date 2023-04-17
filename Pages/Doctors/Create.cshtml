@@ -8,16 +8,18 @@
 <h1>Adaugă un doctor</h1>
 
 
-<hr />
+
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="card-body">
-                <input type="file" class="form-control" onchange="DisplayImage(event)" />
-                <div class="mt-md-3 text-center">
-                    <label class="control-label text-center" for="picture">Alege poză</label>
-                </div>
+            <div class="form-group">
+                <img id="ProfilePicturePreview"/>
+            </div>
+            <div class="form-group">
+                <label asp-for="Doctor.ProfilePictureURL" class="control-label"></label>
+                <input asp-for="Doctor.ProfilePictureURL" class="form-control" />
+                <span asp-validation-for="Doctor.ProfilePictureURL" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Doctor.DoctorName" class="control-label"></label>
@@ -42,12 +44,10 @@
 
 @section Scripts {
     
-    <script type="text/javascript">
-        function DisplayImage(event)
-        {
-            console.log(event)
-            let image = document.getElementById("image1");
-            image.src = URL.createObjectURL(event.target.files[0])
+    <script >
+        $("#ProfilePictureURL").on("change",function()){
+            var output=document.getElementById("ProfilePicturePreview");
+            output.src=$(this).val();
         }
     
     </script>

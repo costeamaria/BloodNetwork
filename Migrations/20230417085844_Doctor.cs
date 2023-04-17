@@ -8,29 +8,19 @@ namespace BloodNetwork.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Phone",
-                table: "Clinic");
-
             migrationBuilder.AddColumn<string>(
-                name: "Number",
+                name: "ProfilePictureURL",
                 table: "Doctor",
                 type: "nvarchar(max)",
-                nullable: true);
+                nullable: false,
+                defaultValue: "");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Number",
+                name: "ProfilePictureURL",
                 table: "Doctor");
-
-            migrationBuilder.AddColumn<decimal>(
-                name: "Phone",
-                table: "Clinic",
-                type: "decimal(18,2)",
-                nullable: false,
-                defaultValue: 0m);
         }
     }
 }

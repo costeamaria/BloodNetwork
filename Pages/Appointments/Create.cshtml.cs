@@ -44,16 +44,40 @@ namespace BloodNetwork.Pages.Appointments
 
         [BindProperty]
         public Appointment Appointment { get; set; }
+        public string sttime { get; set; }
+        public void DisplayTime()
+        {
+            string start_time = "10:00AM";
+            string end_time = "17:00PM";
+            int minutes = 15;
+            List<TimeList> dateTimes = new List<TimeList>();
 
+            DateTime startdatetime = Convert.ToDateTime(start_time);
+            DateTime enddatetime = Convert.ToDateTime(end_time);
+            TimeSpan timeinterval = enddatetime.Subtract(startdatetime);
+
+            int totalminutes = Convert.ToInt32(timeinterval.TotalMinutes);
+
+            int no_of_time_slote = totalminutes / minutes;
+            for(int i = 0; i < no_of_time_slote; i++)
+            {
+               TimeList obj = new TimeList();
+                startdatetime = startdatetime.AddMinutes(minutes);
+                obj.sttime = startdatetime.ToString("hh:mm tt");
+                dateTimes.Add(obj);
+            }
+           
+        }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                DisplayTime();
                 return Page();
             }
-
+            
             _context.Appointment.Add(Appointment);
             await _context.SaveChangesAsync();
 

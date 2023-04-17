@@ -7,50 +7,54 @@
 
 <h1>Doctori</h1>
 
-<p>
-    <a asp-page="Create">Crează un nou doctor</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Doctor[0].DoctorName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Doctor[0].Number)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.DoctorData.Doctors)
-        {
-            string selectedRow = "";
-            if (item.ID == Model.DoctorID)
-            {
-                selectedRow = "table-success";
-            }
-            <tr class="@selectedRow">
-                <td>
-                    <img src="~/imgs/user-128.png" width="50" height="50" alt="picture" />
-                    @Html.DisplayFor(modelItem => item.DoctorName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Number)
-                </td>
-                <td>
-                    <a asp-page="./Index" asp-route-id="@item.ID">Select</a> |
-                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="text-black">
+    <a asp-page="Create" class="btn btn-outline-danger">
+        <i class="bi bi-plus-circle">Crează un nou doctor</i>
+    </a>
+</div>
+<div class="row">
+    <div class="col-md ">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Doctor[0].ProfilePictureURL)</th>
+                    <th>@Html.DisplayNameFor(model => model.Doctor[0].DoctorName)</th>
+                    <th>@Html.DisplayNameFor(model => model.Doctor[0].Number)</th>
+                    <th>Actiuni</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model.DoctorData.Doctors)
+                {
+                    <tr>
+        
+                        <td class="align-middle">
+                            <img class="rounded-circle" src="@item.ProfilePictureURL" alt="@item.DoctorName" style="max-width: 150px" />
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.DoctorName)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.Number)
+                        </td>
+                        <td class="align-middle">
+                            <a class="btn btn-outline-secondary" asp-page="./Index" asp-route-id="@item.ID">Select</a> |
+                            <a class="btn btn-outline-primary" asp-page="./Edit" asp-route-id="@item.ID"><i class="bi bi-pencil-square"></i>Edit</a> |
+                            <a class="btn btn-outline-info" asp-page="./Details" asp-route-id="@item.ID"><i class="bi bi-eye"></i>Details</a> |
+                            <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.ID"><i class="bi bi-pencil-square"></i>Delete</a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
 @if (Model.DoctorData.Doctors != null)
 {
-    <h3>Clinii după doctorii selectați</h3>
+    <h3>Clinica în care doctorul selectat activează</h3>
     <table class="table">
 
         @foreach (var item in Model.DoctorData.Doctors)
@@ -67,9 +71,9 @@
                         foreach (var c in item.Clinics)
                         {
 
-                            @c.Name 
+                                        @c.Name 
 
-                            <br />
+                                        <br />
                         }
                     }
                 </td>
