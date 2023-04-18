@@ -9,7 +9,7 @@
 
 <h3>Ești sigur că vrei să ștergi această clinică?</h3>
 <div>
-    <h4>Clinic</h4>
+    
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -38,10 +38,10 @@
             @Html.DisplayFor(model => model.Clinic.Adress)
         </dd>
     </dl>
-    
+
     <form method="post">
         <input type="hidden" asp-for="Clinic.ID" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Înapoi la listă</a>
+        <a asp-page="./Index" class="btn btn-lg"> <i class="bi fa-kiwi-bird">Înapoi la listă</i></a>
     </form>
 </div>

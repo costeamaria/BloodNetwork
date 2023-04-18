@@ -18,10 +18,10 @@
             @Html.DisplayFor(model => model.Adress.AdressName)
         </dd>
     </dl>
-    
+
     <form method="post">
         <input type="hidden" asp-for="Adress.ID" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Înapoi la listă</a>
+        <a asp-page="./Index" class="btn btn-lg"> <i class="bi fa-kiwi-bird">Înapoi la listă</i></a>
     </form>
 </div>

@@ -8,7 +8,6 @@
 <h1>Detalii</h1>
 
 <div>
-    <h4>Adrese</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -20,6 +19,6 @@
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Adress?.ID">Edit</a> |
-    <a asp-page="./Index">Înapoi la listă</a>
+    <a class="btn btn-outline-info" asp-page="./Edit" asp-route-id="@Model.Adress?.ID">Edit</a> |
+    <a asp-page="./Index" class="btn btn-lg"> <i class="bi fa-kiwi-bird">Înapoi la listă</i></a>
 </div>
