@@ -13,12 +13,9 @@ namespace BloodNetwork.Models
         public int? ClinicID { get; set; }
         [Display(Name = "Clinică")]
         public Clinic? Clinic { get; set; }
-        [DataType(DataType.Time)]
-        [Display(Name = "Oră programare")]
-        public DateTime AppointmentTime { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get { return StartTime.AddMinutes(30); } }
+        public int DurationInMinutes { get { return 30; } }
 
-        [DataType(DataType.Date)]
-        [Display(Name = "Dată programare")]
-        public DateTime AppointmentDate { get; set; }
     }
 }

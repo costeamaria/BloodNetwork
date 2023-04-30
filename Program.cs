@@ -21,8 +21,10 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AllowAnonymousToPage("/Clinics/Index");
     options.Conventions.AllowAnonymousToPage("/Clinics/Details");
     options.Conventions.AuthorizeFolder("/Members", "AdminPolicy");
+    options.Conventions.AuthorizeFolder("/Adresses", "AdminPolicy");
 
 });
+
 
 builder.Services.AddDbContext<BloodNetworkContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BloodNetworkContext") ?? throw new InvalidOperationException("Connection string 'BloodNetworkContext' not found.")));

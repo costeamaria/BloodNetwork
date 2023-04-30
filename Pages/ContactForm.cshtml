@@ -1,0 +1,36 @@
+﻿@page
+@model BloodNetwork.Pages.ContactModel
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Contactează-ne</h3>
+
+
+        </div>
+        <div class="col-sm-6">
+            <form method="post">
+                <div class="form-group" style="color:#F72F05">
+                    <label for="name">Nume</label>
+                    <input type="text" class="form-control" id="name" placeholder="Numele si prenumele" name="name">
+                </div>
+                <div class="form-group" style="color:#F72F05">
+                    <label for="email">Adresa de email</label>
+                    <input type="email" class="form-control" id="email" placeholder="name@example.com" name="emailaddress">
+                </div>
+                <div class="form-group" style="color:#F72F05">
+                    <label for="message">Mesaj</label>
+                    <textarea class="form-control" id="message" rows="10" name="message"></textarea>
+                </div>
+                <div>
+                    <input type="submit" value="Trimite mesajul" />
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

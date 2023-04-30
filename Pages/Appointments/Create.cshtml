@@ -7,13 +7,15 @@
 
 <h1>Programează-te</h1>
 
-<div class="row">
+<<div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Appointment.MemberID" class="control-label"></label>
-                <select asp-for="Appointment.MemberID" class="form-control" asp-items="ViewBag.MemberID"></select>
+                <label asp-for="Appointment.MemberID" class="control-label">Email</label>
+                <select asp-for="Appointment.MemberID" class="form-control" asp-items="ViewBag.MemberID">
+                </select>
+                <span asp-validation-for="Appointment.MemberID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Appointment.Member" class="control-label"></label>
@@ -21,18 +23,25 @@
                 <span asp-validation-for="Appointment.Member" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Appointment.ClinicID" class="control-label"></label>
-                <select asp-for="Appointment.ClinicID" class ="form-control" asp-items="ViewBag.ClinicID"></select>
+                <label asp-for="Appointment.ClinicID" class="control-label">Nume clinică</label>
+                <select asp-for="Appointment.ClinicID" class="form-control" asp-items="ViewBag.ClinicID">
+                </select>
+                <span asp-validation-for="Appointment.ClinicID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Appointment.AppointmentDate" class="control-label"></label>
-                <input asp-for="Appointment.AppointmentDate" class="form-control" />
-                <span asp-validation-for="Appointment.AppointmentDate" class="text-danger"></span>
+                <label asp-for="Appointment.StartTime" class="control-label"></label>
+                <input asp-for="Appointment.StartTime" class="form-control" />
+                <span asp-validation-for="Appointment.StartTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label style="letter-spacing: 2px; color: #F72F05;" for="hour">Ora</label>
-                <input type="datetime" class="form-control" id="hour" placeholder="Ora ta" name="hour" />
-               
+                <label asp-for="Appointment.EndTime" class="control-label"></label>
+                <input asp-for="Appointment.EndTime" class="form-control" />
+                <span asp-validation-for="Appointment.EndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Appointment.Duration" class="control-label"></label>
+                <input asp-for="Appointment.Duration" class="form-control" />
+                <span asp-validation-for="Appointment.Duration" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -42,7 +51,7 @@
 </div>
 
 <div>
-    <a asp-page="./Index" class="btn btn-lg"> <i class="bi fa-kiwi-bird">Înapoi la listă</i></a>
+    <a asp-page="./Index" class="btn btn-lg"> <i class="bi bi-file-text-fill">Înapoi la listă</i></a>
 </div>
 
 @section Scripts {

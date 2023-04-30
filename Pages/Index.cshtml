@@ -4,7 +4,119 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Donezi și faci un bine </h1>
-</div>
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
 
+
+    .caption-container {
+        text-align: center;
+        background-color: #F72F05;
+        padding: 2px 16px;
+        color: white;
+    }
+
+    .display-4 {
+           color: #F72F05;
+           text-align: center;
+           font-family: Global Monospace;
+           font-style: initial;
+           position: relative;
+       }
+    p {
+        font-family: Global Monospace;
+        font-size: 18px;
+        word-spacing: 2px;
+        font-variant: normal;
+        font-style:initial;
+        font-size:medium;
+    }
+
+
+</style>
+<body>
+    <div class="text-center">
+        <h1 class="display-4">Donezi și faci un bine</br></h1>
+        <ul class="list-unstyled mb-0">
+        <li class="right" align="right">
+                <a class="nav-link" style="color:#F72F05" id="login" asp-area="Identity" asp-page="/Account/Login">Administrator<i class="bi bi-bag-heart-fill"></i></a>
+        </li>
+            <li class="right" align="right">
+                <a class="nav-link " style="color:#F72F05" asp-area="" asp-page="/Members/Index">Membrii<i class="bi bi-droplet-half"></i></a>
+            </li>
+        </ul>
+        </br>
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="~/imgs/blood-donation2.gif" class="d-block w-50" alt="imagine 1" style="margin:0 auto" height="325">
+                    <div class="caption-container">
+                        <p id="caption">
+                            </br>
+                           CE TREBUIE SĂ ȘTII ÎNAINTE SĂ DONEZI
+                            </br>
+                            </br>
+                            Pentru a putea dona sânge trebuie să îndeplinești următoarele condiții:</br>
+
+                            1. Să ai vârsta cuprinsă între 18-60 ani;</br>
+                            2. Să fii cetățean român sau rezident în România;</br>
+                            3. Să ai greutatea >/= 50 kg;</br>
+                            4. Să ai tensiunea arterială între 10 ți 18 mmHg;</br>
+                            5. Să nu fi suferit intervenții chirurgicale în ultimele 6 luni;</br>
+                            6. Să nu fii în evidență cu diverse afecțiuni în tratament (diabet, boli cardio-vasculare, hematologice, renale, infecțioase sau parazitare, reumatologice, neurologice, alergii etc.);</br>
+                            7. Să nu ai predispoziție la sângerare prelungită în caz de leziuni;</br>
+                            8. Femeile să nu fie: însărcinate, în perioada de lăuzie, de alăptare sau în perioada menstruală.</br>
+                            </br>
+                        </p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="~/imgs/untold.png" class="d-block w-50" alt="imagine 2" style="margin:0 auto">
+                    <div class="caption-container">
+                        <p id="caption">
+                            </br>
+                            HAIDE SĂ DONEZI ȘI VARA ASTA TE DISTREZI!
+                            </br>
+                            </br>
+                            Dacă donezi sânge pentru categorie festival obți pe loc un bilet de o zi la festival.
+                            </br>
+                            Tot ce trebuie să faci este să te programezi la o clinică care are secțiunea donează pentru FESTIVAL.
+                            </br>
+                            </br>
+                        </p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="~/imgs/doctor.png" class="d-block w-50" alt="imagine 3" style="margin:0 auto">
+                    <div class="caption-container">
+                        <p id="caption">
+                            </br>
+                            DE CE E BINE SĂ DONEZI?
+                            </br>
+                            </br>
+                            1. Donarea regulată produce împrospătarea sângelui și întărirea sistemului imunitar, diminuarea riscului de boli cardiovasculare și chiar de cancer, conform unor studii medicale, de specialitate.</br>
+                            2. Donând regulat se realizează reglarea nivelului mărit al trigliceridelor și colesterolului, ceea ce influențează benefic ficatul.</br>
+                            3. Cu ocazia unei donări de sânge total se produce arderea a 650 calorii.</br>
+                            4. Donatorii recurenți înregistrează o creștere a rezistenței organismului la eventuale șocuri hemoragice.</br>
+                            </br>
+
+                        </p>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+</body>
+</html>

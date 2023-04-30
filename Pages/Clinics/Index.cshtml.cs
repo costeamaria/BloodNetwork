@@ -41,8 +41,8 @@ namespace BloodNetwork.Pages.Clinics
             .ToListAsync();
             if (!String.IsNullOrEmpty(searchString))
             {
-                ClinicD.Clinics = ClinicD.Clinics.Where(s => s.Doctor.DoctorName.Contains(searchString)
- || s.Adress.AdressName.Contains(searchString));
+                ClinicD.Clinics = ClinicD.Clinics.Where(s => s.Doctor.DoctorName.Contains(searchString));
+
                 if (id != null)
                 {
                     ClinicID = id.Value;

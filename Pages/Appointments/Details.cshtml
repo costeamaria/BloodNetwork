@@ -34,21 +34,9 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Appointment.Clinic.Name)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Appointment.AppointmentDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Appointment.AppointmentDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Appointment.AppointmentTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Appointment.AppointmentTime)
-        </dd>
     </dl>
 </div>
 <div>
     <a class="btn btn-outline-info" asp-page="./Edit" asp-route-id="@Model.Appointment?.ID">Edit</a> |
-    <a asp-page="./Index" class="btn btn-lg"> <i class="bi fa-kiwi-bird">Înapoi la listă</i></a>
+    <a asp-page="./Index" class="btn btn-lg"> <i class="bi bi-file-text-fill">Înapoi la listă</i></a>
 </div>

@@ -31,6 +31,7 @@ namespace BloodNetwork.Pages.Clinics
             PopulateAssignedCategoryData(_context, clinic);
             return Page();
         }
+       
 
         [BindProperty]
         public Clinic Clinic { get; set; }

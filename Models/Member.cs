@@ -21,7 +21,7 @@ namespace BloodNetwork.Models
         public string Email { get; set; }
 
         [RegularExpression(@"^\(?([0-9]{4})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$", ErrorMessage = "Telefonul trebuie sa fie de forma '0722-123-123' sau'0722.123.123' sau '0722 123 123'")]
-        [Display(Name = "Telefon")]
+        [Display(Name = "Telefon personal")]
         public string? Phone { get; set; }
 
         [Display(Name = "Nume întreg")]
