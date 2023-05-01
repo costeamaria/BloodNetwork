@@ -14,59 +14,58 @@
 </div>
 <div class="row">
     <div class="col-md ">
-
         <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Appointment[0].Member)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Appointment[0].Member.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Appointment[0].Clinic)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Appointment[0].StartTime)
-            </th>
-             <th>
-                 @Html.DisplayNameFor(model => model.Appointment[0].EndTime)
-             </th>
+            <thead>
+                <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Appointment[0].Duration)
+                        @Html.DisplayNameFor(model => model.Appointment[0].Member.FullName)
                     </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Appointment[0].Clinic.Doctor)
-            </th>
-            <th>Acțiuni</th>
-        </tr>
-    </thead>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Appointment[0].Member.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Appointment[0].Clinic)
+
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Appointment[0].Clinic.Doctor)
+
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Appointment[0].StartTime)
+
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Appointment[0].EndTime)
+
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+    </div>
+   </div>
     <tbody>
 @foreach (var item in Model.Appointment) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Member.FullName)
             </td>
-             <td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Member.Email)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Clinic.Name)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Clinic.Doctor.DoctorName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.StartTime)
             </td>
-             <td>
+            <td>
                 @Html.DisplayFor(modelItem => item.EndTime)
             </td>
-             <td>
-                @Html.DisplayFor(modelItem => item.Duration)
-            </td>
-             <td>
-                 @Html.DisplayFor(modelItem => item.Clinic.Doctor.DoctorName)
-             </td>
-                        
         <th></th>
         </tr>
    
@@ -75,4 +74,6 @@
                 <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.ID"><i class="bi bi-pencil-square"></i>Delete</a>
             </td>
 }
+
     </tbody>
+    </table>

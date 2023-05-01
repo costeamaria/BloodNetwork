@@ -14,20 +14,15 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Appointment.ID" />
             <div class="form-group">
-                <label asp-for="Appointment.Member" class="control-label"></label>
-                <input asp-for="Appointment.Member" class="form-control" />
-                <span asp-validation-for="Appointment.Member" class="text-danger"></span>
-             </div>
+                <label asp-for="Appointment.StartTime" class="control-label"></label>
+                <input asp-for="Appointment.StartTime" class="form-control" />
+                <span asp-validation-for="Appointment.StartTime" class="text-danger"></span>
+            </div>
                <div class="form-group">
                 <label asp-for="Appointment.MemberID" class="control-label">Email</label>
                 <select asp-for="Appointment.MemberID" class="form-control" asp-items="ViewBag.MemberID">
                 </select>
                 <span asp-validation-for="Appointment.MemberID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Appointment.AppointmentTime" class="control-label"></label>
-                <input asp-for="Appointment.AppointmentTime" class="form-control" />
-                <span asp-validation-for="Appointment.AppointmentTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Appointment.ClinicID" class="control-label">Clinică</label>

@@ -25,19 +25,21 @@ namespace BloodNetwork.Pages.Appointments
 
         public IActionResult OnGet()
         {
+            
             var clinicList = _context.Clinic
                 .Select(x => new
                 {
                     x.ID,
-                    ClinicFullName = x.Name + ", doctor: " + x.Doctor.DoctorName + " " 
+                    ClinicFullName = x.Name + ", doctor: " + x.Doctor.DoctorName + ", categoria: "+ x.ClinicCategories + " " 
                 });
            
             var memberList = _context.Member
                 .Select(y => new
                 {
                     y.ID,
-                    MemberFullName = " Email: " + y.Email + " "
+                    MemberFullName = " Email: " + y.Email + ", Nume: "+ y.FullName+ " "
                 });
+              
 
             ViewData["MemberID"] = new SelectList(memberList, "ID", "MemberFullName");
             ViewData["ClinicID"] = new SelectList(clinicList, "ID", "ClinicFullName");
@@ -45,6 +47,7 @@ namespace BloodNetwork.Pages.Appointments
 
             return Page();
         }
+
         [HttpGet]
         public IActionResult GetAvailableTimeSlots(int duration, DateTime start, DateTime end)
         {
@@ -56,11 +59,53 @@ namespace BloodNetwork.Pages.Appointments
         {
             throw new NotImplementedException();
         }
+ 
 
         [BindProperty]
         public Appointment Appointment { get; set; }
-        
 
+        private List<DateTime> GetAvailableTimeSlots(int duration, DateTime start, DateTime end, List<Appointment> existingAppointments)
+        {
+            var availableTimeSlots = new List<DateTime>();
+
+            // Calculate the total number of minutes in the appointment window
+            var totalMinutes = (int)(end - start).TotalMinutes;
+
+            // Calculate the number of time slots that can fit within the appointment window
+            var numTimeSlots = totalMinutes / duration;
+
+            // Initialize a list of time slots starting at the appointment window start time
+            var timeSlots = new List<DateTime>();
+            var currentTime = start;
+            for (int i = 0; i < numTimeSlots; i++)
+            {
+                timeSlots.Add(currentTime);
+                currentTime = currentTime.AddMinutes(duration);
+            }
+
+            // Iterate through the existing appointments and remove their time slots from the list of available time slots
+            foreach (var appointment in existingAppointments)
+            {
+                var startTime = appointment.StartTime;
+                var endTime = appointment.EndTime;
+
+                // Loop through each time slot and remove it if it falls within the existing appointment
+                for (int i = 0; i < timeSlots.Count; i++)
+                {
+                    var timeSlot = timeSlots[i];
+                    if (timeSlot >= startTime && timeSlot.AddMinutes(duration) <= endTime)
+                    {
+                        timeSlots.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
+
+            // Add the remaining time slots to the list of available time slots
+            availableTimeSlots.AddRange(timeSlots);
+
+            return availableTimeSlots;
+        }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -76,56 +121,8 @@ namespace BloodNetwork.Pages.Appointments
 
             return RedirectToPage("./Index");
         }
-        private List<Tuple<DateTime, DateTime>> GetAvailableTimeSlots(int DurationInMinutes, DateTime start, DateTime end, List<Appointment> existingAppointments)
-        {
-            var availableTimeSlots = new List<Tuple<DateTime, DateTime>>();
 
-            // Calculate the total number of minutes in the appointment window
-            var totalMinutes = (int)(end - start).TotalMinutes;
-
-            // Calculate the number of time slots that can fit within the appointment window
-            var numTimeSlots = totalMinutes / DurationInMinutes;
-
-            // Initialize a list of time slots starting at the appointment window start time
-            var timeSlots = new List<DateTime>();
-            var currentTime = start;
-            for (int i = 0; i < numTimeSlots; i++)
-            {
-                timeSlots.Add(currentTime);
-                currentTime = currentTime.AddMinutes(DurationInMinutes);
-            }
-
-            // Iterate through the existing appointments and remove their time slots from the list of available time slots
-            foreach (var appointment in existingAppointments)
-            {
-                var startTime = appointment.StartTime;
-                var endTime = appointment.EndTime;
-
-                // Loop through each time slot and remove it if it falls within the existing appointment
-                for (int i = 0; i < timeSlots.Count; i++)
-                {
-                    var timeSlot = timeSlots[i];
-                    if (timeSlot >= startTime && timeSlot.AddMinutes(DurationInMinutes) <= endTime)
-                    {
-                        timeSlots.RemoveAt(i);
-                        i--;
-                    }
-                }
-            }
-
-            // Filter out time slots that are less than the appointment duration
-            timeSlots = timeSlots.Where(slot => (slot.AddMinutes(DurationInMinutes) - start).TotalMinutes >= DurationInMinutes).ToList();
-
-            // Convert each time slot to a tuple of start and end times
-            foreach (var timeSlot in timeSlots)
-            {
-                var endTime = timeSlot.AddMinutes(DurationInMinutes);
-                var tuple = Tuple.Create(timeSlot, endTime);
-                availableTimeSlots.Add(tuple);
-            }
-
-            return availableTimeSlots;
-        }
+       
 
     }
 }

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BloodNetwork.Data;
 using BloodNetwork.Models;
+using Newtonsoft.Json;
+
 
 namespace BloodNetwork.Pages.Appointments
 {
@@ -29,7 +31,9 @@ namespace BloodNetwork.Pages.Appointments
                 .Include(c => c.Clinic)
                 .ThenInclude(c => c.Doctor)
                 .Include(c => c.Member).ToListAsync();
+               
             }
+
         }
        
     }
