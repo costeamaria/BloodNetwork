@@ -2,15 +2,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net.Mail;
 using System.Net;
-using GSF.Net.Smtp;
+
 
 namespace BloodNetwork.Pages
 {
     public class ContactModel : PageModel
     {
-        public string isSend { get; set; }
+        
         public void OnGet()
         {
+         
         }
 
         public void OnPost()
@@ -19,15 +20,7 @@ namespace BloodNetwork.Pages
             var email = Request.Form["emailaddress"];
             var message = Request.Form["message"];
             SendMail(name, email, message);
-            try
-            {
-                SendMail(name, email, message);
-                isSend = "send";
-            }
-            catch (Exception)
-            {
-                isSend = "failed";
-            }
+               
 
         }
 
@@ -35,22 +28,21 @@ namespace BloodNetwork.Pages
         {
             MailMessage message = new MailMessage();
             SmtpClient smtpClient = new SmtpClient();
-            message.From = new MailAddress("bloodnetwork@gmail.com");
-            message.To.Add(new MailAddress("costea.mari23@gmail.com")); 
-            string st = "<p>Name: " + name + "</p" + "<p>Email: " + email + "</p" + "<p>Message: " + message1 + "</p";
+            message.From = new MailAddress("costea.mari23@gmail.com");
+            message.To.Add("costea.mari23@gmail.com"); 
+            message.Subject = "Test email";
             message.IsBodyHtml = true;
-            message.Body = st;
+            message.Body = "<p>Name: " + name + "</p><br>" + "<p>Email: " + email + "</p><br>" + "<p>Message: " + message1 + "</p>";
 
             smtpClient.Port = 587; 
-            smtpClient.Host = "costea.mari23@gmail.com"; 
+            smtpClient.Host = "smtp.gmail.com"; 
             smtpClient.EnableSsl = true;
             smtpClient.UseDefaultCredentials = false;
-            smtpClient.Credentials = new NetworkCredential("bloodnetwork@gmail.com","Password here");
+            smtpClient.Credentials = new NetworkCredential("costea.mari23@gmail.com","tqqxosmqoagxazrg");
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-
-            //
             smtpClient.Send(message);
             return true;
         }
+
     }
 }

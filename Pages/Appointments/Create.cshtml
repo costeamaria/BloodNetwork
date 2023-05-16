@@ -23,23 +23,66 @@
                 </select>
                 <span asp-validation-for="Appointment.ClinicID" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Appointment.StartTime" class="control-label"></label>
-                <input asp-for="Appointment.StartTime" class="form-control" />
-                <span asp-validation-for="Appointment.StartTime" class="text-danger"></span>
-            </div>
+            <div id='calendar'></div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
 <div>
     <a asp-page="./Index" class="btn btn-lg"> <i class="bi bi-file-text-fill">Înapoi la listă</i></a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css' rel='stylesheet' />
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.10.1/scheduler.min.css' rel='stylesheet' />
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.10.1/scheduler.min.js'></script>
+    <script>
+        $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'agendaDay'
+                },
+                defaultView: 'agendaWeek',
+                weekends: false,
+                businessHours: {
+                    start: '09:00',
+                    end: '17:00',
+                    dow: [1, 2, 3, 4, 5]
+                },
+                slotDuration: '00:30:00',
+                minTime: '09:00:00',
+                maxTime: '17:00:00',
+                editable: true,
+                selectable: true,
+                selectHelper: true,
+                select: function (start, end) {
+                    // do something when a selection is made
+                },
+                eventResize: function (event, delta, revertFunc) {
+                    // do something when an event is resized
+                },
+                eventDrop: function (event, delta, revertFunc) {
+                    // do something when an event is moved
+                },
+                events: [
+                    // put your events here
+                ]
+            });
+            $("#DateAndTime").on("change", function () {
+                var selectedDate = new Date($(this).val());
+                var selectedDateTime = selectedDate.toISOString();
+                $("#StartTime").val(selectedDateTime);
+            });
+
+        });
+    </script>
 }

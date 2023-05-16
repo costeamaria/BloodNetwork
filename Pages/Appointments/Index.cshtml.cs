@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using BloodNetwork.Data;
 using BloodNetwork.Models;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace BloodNetwork.Pages.Appointments
@@ -25,13 +27,16 @@ namespace BloodNetwork.Pages.Appointments
 
         public async Task OnGetAsync()
         {
+           
             if (_context.Appointment != null)
             {
                 Appointment = await _context.Appointment
-                .Include(c => c.Clinic)
-                .ThenInclude(c => c.Doctor)
-                .Include(c => c.Member).ToListAsync();
-               
+                .Include(appt => appt.Clinic)
+                .ThenInclude(appt => appt.Doctor)
+                .Include(appt => appt.Member)
+                .Where(appt => appt.Member.Email == User.Identity.Name).ToListAsync();
+
+
             }
 
         }

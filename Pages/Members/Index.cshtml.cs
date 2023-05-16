@@ -17,9 +17,11 @@ namespace BloodNetwork.Pages.Members
         public IndexModel(BloodNetwork.Data.BloodNetworkContext context)
         {
             _context = context;
+           
         }
 
         public IList<Member> Member { get;set; } = default!;
+       
 
         public async Task OnGetAsync()
         {
@@ -27,6 +29,9 @@ namespace BloodNetwork.Pages.Members
             {
                 Member = await _context.Member.ToListAsync();
             }
+            
+            
+           
         }
     }
 }

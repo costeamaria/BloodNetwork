@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using BloodNetwork.Areas.Identity.Pages.Account.Manage;
+using Microsoft.AspNetCore.Session;
 
 namespace BloodNetwork.Areas.Identity.Pages.Account
 {
@@ -96,6 +97,8 @@ namespace BloodNetwork.Areas.Identity.Pages.Account
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            
+
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             
