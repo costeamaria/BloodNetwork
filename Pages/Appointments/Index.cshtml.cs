@@ -24,22 +24,36 @@ namespace BloodNetwork.Pages.Appointments
         }
 
         public IList<Appointment> Appointment { get;set; } = default!;
+        
 
         public async Task OnGetAsync()
         {
-           
+            var isAdmin = User.Identity.Name == "admin@gmail.com";
+
             if (_context.Appointment != null)
             {
-                Appointment = await _context.Appointment
-                .Include(appt => appt.Clinic)
-                .ThenInclude(appt => appt.Doctor)
-                .Include(appt => appt.Member)
-                .Where(appt => appt.Member.Email == User.Identity.Name).ToListAsync();
+                if (isAdmin)
+                {
+                    // Retrieve all appointments if user is an admin
+                        Appointment = await _context.Appointment
+                        .Include(appt => appt.Clinic)
+                        .ThenInclude(appt => appt.Doctor)
+                        .Include(appt => appt.Member)
+                        .ToListAsync();
+                }
+                else
 
+                {
+                    Appointment = await _context.Appointment
+                    .Include(appt => appt.Clinic)
+                    .ThenInclude(appt => appt.Doctor)
+                    .Include(appt => appt.Member)
+                    .Where(appt => appt.Member.Email == User.Identity.Name).ToListAsync();
+                }
 
             }
 
         }
-       
+
     }
 }
