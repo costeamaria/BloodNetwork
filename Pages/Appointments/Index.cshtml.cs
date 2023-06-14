@@ -24,7 +24,6 @@ namespace BloodNetwork.Pages.Appointments
         }
 
         public IList<Appointment> Appointment { get;set; } = default!;
-        
 
         public async Task OnGetAsync()
         {
@@ -49,11 +48,12 @@ namespace BloodNetwork.Pages.Appointments
                     .ThenInclude(appt => appt.Doctor)
                     .Include(appt => appt.Member)
                     .Where(appt => appt.Member.Email == User.Identity.Name).ToListAsync();
+
                 }
 
             }
 
         }
 
-    }
+}
 }

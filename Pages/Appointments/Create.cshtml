@@ -23,9 +23,13 @@
                 </select>
                 <span asp-validation-for="Appointment.ClinicID" class="text-danger"></span>
             </div>
-            <div id='calendar'></div>
+             <div class="form-group">
+                <label asp-for="Appointment.StartTime" class="control-label"></label>
+                <input id="time" asp-for="Appointment.StartTime" onchange="verify()" class="form-control" />
+                <span asp-validation-for="Appointment.StartTime" class="text-danger"></span>
+            </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" id="createBtn" disabled />
             </div>
         </form>
     </div>
@@ -35,54 +39,63 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css' rel='stylesheet' />
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.10.1/scheduler.min.css' rel='stylesheet' />
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.10.1/scheduler.min.js'></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
-        $(document).ready(function () {
-            $('#calendar').fullCalendar({
-                schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'agendaDay'
-                },
-                defaultView: 'agendaWeek',
-                weekends: false,
-                businessHours: {
-                    start: '09:00',
-                    end: '17:00',
-                    dow: [1, 2, 3, 4, 5]
-                },
-                slotDuration: '00:30:00',
-                minTime: '09:00:00',
-                maxTime: '17:00:00',
-                editable: true,
-                selectable: true,
-                selectHelper: true,
-                select: function (start, end) {
-                    // do something when a selection is made
-                },
-                eventResize: function (event, delta, revertFunc) {
-                    // do something when an event is resized
-                },
-                eventDrop: function (event, delta, revertFunc) {
-                    // do something when an event is moved
-                },
-                events: [
-                    // put your events here
-                ]
-            });
-            $("#DateAndTime").on("change", function () {
-                var selectedDate = new Date($(this).val());
-                var selectedDateTime = selectedDate.toISOString();
-                $("#StartTime").val(selectedDateTime);
+        var scheduledAppointments = []; // Listă pentru a stoca programările salvate
+
+        function verify() {
+            var selectedTime = new Date($("#time").val());
+            var selectedDay = selectedTime.getDay();
+            var selectedHour = selectedTime.getHours();
+            var selectedMinutes = selectedTime.getMinutes();
+
+            if (selectedHour < 9 || selectedHour > 17) {
+                alert("Selectează un interval orar între 9:00 AM și 5:00 PM.");
+                return;
+            }
+
+            if (selectedDay === 0 || selectedDay === 6) {
+                alert("Selectează o zi de luni până vineri.");
+                return;
+            }
+
+            if (selectedMinutes % 30 !== 0) {
+                alert("Selectează interval de 30 de minute.");
+                return;
+            }
+
+            // Verifică dacă intervalul orar este deja programat
+            var isAlreadyScheduled = scheduledAppointments.some(function (appointment) {
+                return appointment.getTime() === selectedTime.getTime();
             });
 
-        });
+            if (isAlreadyScheduled) {
+                alert("Intervalul orar selectat a fost deja programat.");
+                return;
+            }
+
+            // Verifică dacă toate condițiile sunt îndeplinite
+            var selectedMedic = $("#Appointment_MemberID").val();
+            var selectedDate = selectedTime.toDateString();
+            var isDifferent = (
+                scheduledAppointments.every(function (appointment) {
+                    return (
+                        appointment.MedicID !== selectedMedic ||
+                        appointment.Date !== selectedDate ||
+                        appointment.StartTime !== selectedTime.getTime()
+                    );
+                })
+            );
+
+            if (isDifferent) {
+                $("#createBtn").prop("disabled", false); // Activează butonul "Create"
+            } else {
+                $("#createBtn").prop("disabled", true); // Dezactivează butonul "Create"
+            }
+        }
     </script>
+
+
 }

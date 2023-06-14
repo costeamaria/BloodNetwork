@@ -7,41 +7,95 @@
 
 <h1>Modifică</h1>
 
-<h4>Programări</h4>
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Appointment.ID" />
             <div class="form-group">
-                <label asp-for="Appointment.StartTime" class="control-label"></label>
-                <input asp-for="Appointment.StartTime" class="form-control" />
-                <span asp-validation-for="Appointment.StartTime" class="text-danger"></span>
-            </div>
-               <div class="form-group">
                 <label asp-for="Appointment.MemberID" class="control-label">Email</label>
                 <select asp-for="Appointment.MemberID" class="form-control" asp-items="ViewBag.MemberID">
                 </select>
                 <span asp-validation-for="Appointment.MemberID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Appointment.ClinicID" class="control-label">Clinică</label>
+                <label asp-for="Appointment.ClinicID" class="control-label">Nume clinică</label>
                 <select asp-for="Appointment.ClinicID" class="form-control" asp-items="ViewBag.ClinicID">
                 </select>
                 <span asp-validation-for="Appointment.ClinicID" class="text-danger"></span>
             </div>
-           
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label asp-for="Appointment.StartTime" class="control-label"></label>
+                <input id="time" asp-for="Appointment.StartTime" onchange="verify()" class="form-control" />
+                <span asp-validation-for="Appointment.StartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" id="saveBtn" disabled />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-     <a asp-page="./Index" class="btn btn-lg"><i class="bi bi-file-text-fill">Înapoi la listă</i></a>
+    <a asp-page="./Index" class="btn btn-lg"><i class="bi bi-file-text-fill">Înapoi la listă</i></a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        var scheduledAppointments = []; // Listă pentru a stoca programările salvate
+
+        function verify() {
+            var selectedTime = new Date($("#time").val());
+            var selectedDay = selectedTime.getDay();
+            var selectedHour = selectedTime.getHours();
+            var selectedMinutes = selectedTime.getMinutes();
+
+            if (selectedHour < 9 || selectedHour > 17) {
+                alert("Selectează un interval orar între 9:00 AM și 5:00 PM.");
+                return;
+            }
+
+            if (selectedDay === 0 || selectedDay === 6) {
+                alert("Selectează o zi de luni până vineri.");
+                return;
+            }
+
+            if (selectedMinutes % 30 !== 0) {
+                alert("Selectează interval de 30 de minute.");
+                return;
+            }
+
+            // Verifică dacă intervalul orar este deja programat
+            var isAlreadyScheduled = scheduledAppointments.some(function (appointment) {
+                return appointment.getTime() === selectedTime.getTime();
+            });
+
+            if (isAlreadyScheduled) {
+                alert("Intervalul orar selectat a fost deja programat.");
+                return;
+            }
+
+            // Verifică dacă toate condițiile sunt îndeplinite
+            var selectedMedic = $("#Appointment_MemberID").val();
+            var selectedDate = selectedTime.toDateString();
+            var isDifferent = (
+                scheduledAppointments.every(function (appointment) {
+                    return (
+                        appointment.MedicID !== selectedMedic ||
+                        appointment.Date !== selectedDate ||
+                        appointment.StartTime !== selectedTime.getTime()
+                    );
+                })
+            );
+
+            if (isDifferent) {
+                $("#saveBtn").prop("disabled", false); // Activează butonul "Save"
+            } else {
+                $("#saveBtn").prop("disabled", true); // Dezactivează butonul "Save"
+            }
+        }
+    </script>
 }

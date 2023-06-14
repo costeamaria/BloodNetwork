@@ -8,9 +8,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BloodNetwork.Data;
 using BloodNetwork.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace BloodNetwork.Pages.Categories
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly BloodNetwork.Data.BloodNetworkContext _context;

@@ -12,7 +12,6 @@ using System.Data;
 
 namespace BloodNetwork.Pages.Appointments
 {
-  
     public class DeleteModel : PageModel
     {
         private readonly BloodNetwork.Data.BloodNetworkContext _context;
@@ -23,7 +22,7 @@ namespace BloodNetwork.Pages.Appointments
         }
 
         [BindProperty]
-      public Appointment Appointment { get; set; } = default!;
+        public Appointment Appointment { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -32,16 +31,19 @@ namespace BloodNetwork.Pages.Appointments
                 return NotFound();
             }
 
-            var appointment = await _context.Appointment.FirstOrDefaultAsync(m => m.ID == id);
+            var appointment = await _context.Appointment
+                .Include(a => a.Clinic)
+                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (appointment == null)
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Appointment = appointment;
             }
+
             return Page();
         }
 

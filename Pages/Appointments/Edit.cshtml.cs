@@ -32,14 +32,32 @@ namespace BloodNetwork.Pages.Appointments
                 return NotFound();
             }
 
-            var appointment =  await _context.Appointment.FirstOrDefaultAsync(m => m.ID == id);
+            var appointment = await _context.Appointment
+                .Include(a => a.Member)
+                .Include(a => a.Clinic)
+                .FirstOrDefaultAsync(m => m.ID == id);
+
             if (appointment == null)
             {
                 return NotFound();
             }
+
             Appointment = appointment;
-            ViewData["MemberID"] = new SelectList(_context.Member, "ID", "ID");
-            ViewData["ClinicID"] = new SelectList(_context.Clinic, "ID", "ID");
+
+            var loggedInUserEmail = User.Identity.Name;
+            var loggedInMember = await _context.Member.FirstOrDefaultAsync(m => m.Email == loggedInUserEmail);
+
+            if (loggedInMember != null && loggedInMember.Email == "admin@gmail.com")
+            {
+                ViewData["MemberID"] = new SelectList(_context.Member, "ID", "Email");
+            }
+            else if (loggedInMember != null)
+            {
+                ViewData["MemberID"] = new SelectList(new[] { loggedInMember }, "ID", "Email");
+            }
+
+            ViewData["ClinicID"] = new SelectList(_context.Clinic, "ID", "Name");
+
             return Page();
         }
 
@@ -49,6 +67,31 @@ namespace BloodNetwork.Pages.Appointments
         {
             if (!ModelState.IsValid)
             {
+                return Page();
+            }
+
+            var existingAppointment = await _context.Appointment.FirstOrDefaultAsync(a =>
+                a.ID != Appointment.ID &&
+                a.ClinicID == Appointment.ClinicID &&
+                a.StartTime == Appointment.StartTime);
+
+            if (existingAppointment != null)
+            {
+                // Ora selectată se suprapune cu o altă programare existentă în aceeași clinică
+                ModelState.AddModelError(string.Empty, "Ora selectată se suprapune cu o altă programare existentă în aceeași clinică.");
+                var loggedInUserEmail = User.Identity.Name;
+                var loggedInMember = await _context.Member.FirstOrDefaultAsync(m => m.Email == loggedInUserEmail);
+
+                if (loggedInMember != null && loggedInMember.Email == "admin@gmail.com")
+                {
+                    ViewData["MemberID"] = new SelectList(_context.Member, "ID", "Email");
+                }
+                else if (loggedInMember != null)
+                {
+                    ViewData["MemberID"] = new SelectList(new[] { loggedInMember }, "ID", "Email");
+                }
+
+                ViewData["ClinicID"] = new SelectList(_context.Clinic, "ID", "Name");
                 return Page();
             }
 
@@ -75,7 +118,7 @@ namespace BloodNetwork.Pages.Appointments
 
         private bool AppointmentExists(int id)
         {
-          return (_context.Appointment?.Any(e => e.ID == id)).GetValueOrDefault();
+            return (_context.Appointment?.Any(e => e.ID == id)).GetValueOrDefault();
         }
     }
 }

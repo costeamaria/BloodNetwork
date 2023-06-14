@@ -31,6 +31,10 @@
                         @Html.DisplayNameFor(model => model.Appointment[0].Clinic.Doctor)
 
                     </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Appointment[0].StartTime)
+
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -51,6 +55,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Clinic.Doctor.DoctorName)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
         <th></th>
         </tr>
    
@@ -58,35 +65,14 @@
                 <a class="btn btn-outline-primary" asp-page="./Edit" asp-route-id="@item.ID"><i class="bi bi-pencil-square"></i>Edit</a> |
                 <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.ID"><i class="bi bi-pencil-square"></i>Delete</a>
             </td>
+
 }
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
     <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.min.css' rel='stylesheet' media='print' />
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
-
-    <script>
-        $(document).ready(function () {
-            // Cerem datele din calendar
-            $.ajax({
-                url: '/calendar/getevents', // adresa către care facem cererea HTTP
-                type: 'GET', // tipul cererii HTTP
-                success: function (response) {
-                    // răspunsul primit conține evenimentele din calendar
-                    // le vom afișa folosind biblioteca FullCalendar
-                    $('#calendar').fullCalendar({
-                        header: {
-                            left: 'prev,next today',
-                            center: 'title',
-                            right: 'month,agendaWeek,agendaDay'
-                        },
-                        events: response // evenimentele din calendar
-                    });
-                }
-            });
-        });
-    </script>
-
 
     </tbody>
     </table>

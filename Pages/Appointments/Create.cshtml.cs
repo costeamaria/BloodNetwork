@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Session;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
+
 namespace BloodNetwork.Pages.Appointments
 {
     public class CreateModel : PageModel
@@ -32,16 +33,21 @@ namespace BloodNetwork.Pages.Appointments
                     x.ID,
                     ClinicFullName = x.Name + ", doctor: " + x.Doctor.DoctorName + " "
                 });
-           
-            var memberList = _context.Member
-                .Select(y => new
-                {
-                    y.ID,
-                    MemberFullName = " Email: " + y.Email + ", Nume: "+ y.FullName+ " "
-                });
-              
 
-            ViewData["MemberID"] = new SelectList(memberList, "ID", "MemberFullName");
+            if (User.Identity.IsAuthenticated)
+            {
+                var email = User.Identity.Name;
+
+                var memberList = _context.Member
+                    .Where(y => y.Email == email) // Filtrați lista de membri pe baza adresei de email a utilizatorului autentificat
+                    .Select(y => new
+                    {
+                        y.ID,
+                        MemberFullName = " Email: " + y.Email + ", Nume: " + y.FullName + " "
+                    });
+
+                ViewData["MemberID"] = new SelectList(memberList, "ID", "MemberFullName");
+            }
             ViewData["ClinicID"] = new SelectList(clinicList, "ID", "ClinicFullName");
             
 
@@ -50,26 +56,41 @@ namespace BloodNetwork.Pages.Appointments
  
         [BindProperty]
         public Appointment Appointment { get; set; }
-        [BindProperty]
-        public DateTime StartTime { get; set; }
 
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || _context.Appointment == null || Appointment == null)
             {
-                
                 return Page();
             }
-            
+            var existingAppointment = await _context.Appointment.FirstOrDefaultAsync(a =>
+            a.MemberID == Appointment.MemberID &&
+            a.StartTime == Appointment.StartTime &&
+            a.ClinicID == Appointment.ClinicID);
+
+            if (existingAppointment != null)
+            {
+                // Programarea duplicată a fost găsită, tratați această situație aici
+                ModelState.AddModelError(string.Empty, "O programare cu același medic, dată și oră există deja.");
+                // Reîncărcați lista de opțiuni pentru medic și data/ora disponibil
+                var email = User.Identity.Name;
+
+                var member = await _context.Member.FirstOrDefaultAsync(y => y.Email == email);
+                if (member != null)
+                {
+                    ViewData["MemberID"] = new SelectList(new[] { member }, "ID", "Email");
+                }
+                ViewData["ClinicID"] = new SelectList(_context.Clinic, "ID", "Name");
+                return Page();
+            }
+
             _context.Appointment.Add(Appointment);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
-
-       
 
     }
 }
