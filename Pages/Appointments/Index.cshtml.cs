@@ -24,7 +24,7 @@ namespace BloodNetwork.Pages.Appointments
         }
 
         public IList<Appointment> Appointment { get;set; } = default!;
-
+       
         public async Task OnGetAsync()
         {
             var isAdmin = User.Identity.Name == "admin@gmail.com";
@@ -50,10 +50,11 @@ namespace BloodNetwork.Pages.Appointments
                     .Where(appt => appt.Member.Email == User.Identity.Name).ToListAsync();
 
                 }
-
+               
             }
 
         }
 
-}
+
+    }
 }
