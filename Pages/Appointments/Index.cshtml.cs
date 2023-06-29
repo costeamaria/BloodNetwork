@@ -33,7 +33,7 @@ namespace BloodNetwork.Pages.Appointments
             {
                 if (isAdmin)
                 {
-                    // Retrieve all appointments if user is an admin
+                    // dupa verificare daca user-ul este admin, afiseaza toate programarile inregistrate in site
                         Appointment = await _context.Appointment
                         .Include(appt => appt.Clinic)
                         .ThenInclude(appt => appt.Doctor)

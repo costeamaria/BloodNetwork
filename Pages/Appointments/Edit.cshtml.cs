@@ -77,7 +77,6 @@ namespace BloodNetwork.Pages.Appointments
 
             if (existingAppointment != null)
             {
-                // Ora selectată se suprapune cu o altă programare existentă în aceeași clinică
                 ModelState.AddModelError(string.Empty, "Ora selectată se suprapune cu o altă programare existentă în aceeași clinică.");
                 var loggedInUserEmail = User.Identity.Name;
                 var loggedInMember = await _context.Member.FirstOrDefaultAsync(m => m.Email == loggedInUserEmail);

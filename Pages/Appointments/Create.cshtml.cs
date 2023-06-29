@@ -39,7 +39,7 @@ namespace BloodNetwork.Pages.Appointments
                 var email = User.Identity.Name;
 
                 var memberList = _context.Member
-                    .Where(y => y.Email == email) // Filtrați lista de membri pe baza adresei de email a utilizatorului autentificat
+                    .Where(y => y.Email == email) //lista membrilor pe baza adresei de email a utilizatorului autentificat in aplicatie
                     .Select(y => new
                     {
                         y.ID,
@@ -74,7 +74,7 @@ namespace BloodNetwork.Pages.Appointments
             {
                 // Programarea duplicată a fost găsită, tratați această situație aici
                 ModelState.AddModelError(string.Empty, "O programare cu același medic, dată și oră există deja.");
-                // Reîncărcați lista de opțiuni pentru medic și data/ora disponibil
+                // lista de opțiuni pentru medic și data,ora disponibila
                 var email = User.Identity.Name;
 
                 var member = await _context.Member.FirstOrDefaultAsync(y => y.Email == email);
